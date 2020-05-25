@@ -32,6 +32,9 @@
     "Device",
     "NetworkStatus"
   ],
+  "intent_filters":[
+     {"action":"changeColor"}
+  ],
   "urls": [
     "http://www.yourappserver.com/*"
   ],
