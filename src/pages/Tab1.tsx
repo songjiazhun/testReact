@@ -13,22 +13,23 @@ import './Tab1.css';
 declare let appManager: AppManagerPlugin.AppManager;
 declare let titleBarManager:TitleBarPlugin.TitleBarManager;
 
-
 const Tab1:React.FC=()=>{
-    let [bgColor,setbgColor] = useState('lightBg');
     let [color,setColor] = useState('');
+    
+    let str = localStorage.getItem("bgColor") || "lightBg";
+    let [bgColor,setbgColor] = useState(str);  
     let hanldeItem=(item:any)=>{
       switch(item.key){
         case 'test':
-          appManager.sendIntentResponse('changeColor','ssssss',222222222,(msg)=>{
+          appManager.sendIntent('changeColor',{},{},(msg)=>{
             alert('clicked:'+JSON.stringify(msg));
           },(err)=>{
              alert(JSON.stringify(err));
           });
-          //setbgColor('darkBg');
           break;
         case 'test1':
-          alert('clicked:'+item.title);
+            setbgColor('lightBg');
+            localStorage.setItem("bgColor","lightBg");
             break;  
       }
     }
@@ -40,21 +41,18 @@ const Tab1:React.FC=()=>{
       titleBarManager.addOnItemClickedListener((clickitem)=>{      
         hanldeItem(clickitem);
       });
-      titleBarManager.setupMenuItems([{'key':"test",'iconPath':'./assets/icon/favicon.png',title:'test'},
-                                      {'key':"test1",'iconPath':'./assets/icon/favicon.png',title:'test1'}]);
+      titleBarManager.setupMenuItems([{'key':"test",'iconPath':'./assets/icon/favicon.png',title:'darkbg'},
+                                      {'key':"test1",'iconPath':'./assets/icon/favicon.png',title:'lightbg'}]);
                                       
       appManager.setIntentListener((msg)=>{
-        alert(JSON.stringify(msg));
+        if(msg.action === "changeColor"){
+          setbgColor('darkBg');
+          localStorage.setItem("bgColor","darkBg");
+        }
       });
       appManager.setVisible("show");
     }
     let tankaung = ()=>{
-      appManager.sendIntentResponse('app',"ssssss",222222,(msg)=>{
-        //alert('clicked:');
-        setColor('red');
-      },(err)=>{
-         alert(JSON.stringify(err));
-      });
       if(color === ''){
         setColor('red');
       }else{
@@ -84,7 +82,7 @@ const Tab1:React.FC=()=>{
               A default header-bar-component has been created to show you how to use custom UI components. That components also makes use of Trinity's AppService plugin as a sample.
             </p>
             
-    <IonButton onClick={tankaung} className={color}>test click{color}</IonButton>
+    <IonButton onClick={tankaung} className={color}>test click</IonButton>
           </IonCardContent>
         </IonCard>
         </div>

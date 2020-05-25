@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { IonHeader, IonToolbar, IonPage, IonTitle, IonCard, IonContent, IonCardContent, IonCardTitle, IonCardHeader } from '@ionic/react';
+import { IonPage,IonCard, IonContent, IonCardContent, IonCardTitle, IonCardHeader } from '@ionic/react';
 declare let appManager: AppManagerPlugin.AppManager;
 declare let titleBarManager:TitleBarPlugin.TitleBarManager;
+const Tab3Page: React.FC = () => {
+let str = localStorage.getItem("bgColor") || "lightBg";
+let [bgColor,setbgColor] = useState(str);
 let initTitle=()=>{
   titleBarManager.setupMenuItems([]);
   titleBarManager.setBackgroundColor("#ff9f46");
@@ -10,8 +13,6 @@ let initTitle=()=>{
   titleBarManager.setTitle("tab3");
   appManager.setVisible("show");
 }
-const Tab3Page: React.FC = () => {
-let [bgColor,setbgColor] = useState('lightBg');  
 useEffect(()=>{
   initTitle();
 },[]);
