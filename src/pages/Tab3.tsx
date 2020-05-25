@@ -1,7 +1,13 @@
 import React from 'react';
 import { IonHeader, IonToolbar, IonPage, IonTitle, IonCard, IonContent, IonCardContent, IonCardTitle, IonCardHeader } from '@ionic/react';
-
+declare let appManager: AppManagerPlugin.AppManager;
+declare let titleBarManager:TitleBarPlugin.TitleBarManager;
 const Tab3Page: React.FC = () => {
+  let initTitle=()=>{
+    titleBarManager.setTitle("tab3");
+    appManager.setVisible("show");
+}
+initTitle();
   return (
     <IonPage>
       <IonHeader>
